@@ -27,12 +27,12 @@ ENV DOLPHINSCHEDULER_HOME /opt/dolphinscheduler
 
 # 1. install command/library/software
 # If install slowly, you can replcae debian's mirror with new mirror, Example:
-# RUN { \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free"; \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free"; \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free"; \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free"; \
-# } > /etc/apt/sources.list
+ RUN { \
+     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free"; \
+     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free"; \
+     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free"; \
+     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free"; \
+ } > /etc/apt/sources.list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends tzdata dos2unix python supervisor procps psmisc netcat sudo tini && \
     echo "Asia/Shanghai" > /etc/timezone && \
@@ -59,6 +59,8 @@ RUN sed -i 's/*.conf$/*.ini/' /etc/supervisor/supervisord.conf && \
     dos2unix /root/startup.sh && \
     dos2unix /opt/dolphinscheduler/script/*.sh && \
     dos2unix /opt/dolphinscheduler/bin/*.sh && \
+    chmod +x -R /opt/dolphinscheduler/script/ /opt/dolphinscheduler/bin/ && \
+    chmod +x /root/*.sh && \
     rm -f /bin/sh && \
     ln -s /bin/bash /bin/sh && \
     mkdir -p /tmp/xls && \

@@ -17,7 +17,6 @@
 #
 
 set -e
-
 echo "------ dolphinscheduler start - build -------"
 printenv
 
@@ -37,14 +36,14 @@ echo "Version: $VERSION"
 echo "Repo: $DOCKER_REPO"
 
 echo -e "Current Directory is $(pwd)\n"
-
-# maven package(Project Directory)
-echo -e "mvn -B clean compile package -Prelease -Dmaven.test.skip=true"
-mvn -B clean compile package -Prelease -Dmaven.test.skip=true
-
-# mv dolphinscheduler-bin.tar.gz file to docker/build directory
-echo -e "mv $(pwd)/dolphinscheduler-dist/target/apache-dolphinscheduler-${VERSION}-bin.tar.gz $(pwd)/docker/build/\n"
-mv $(pwd)/dolphinscheduler-dist/target/apache-dolphinscheduler-${VERSION}-bin.tar.gz $(pwd)/docker/build/
+#
+## maven package(Project Directory)
+#echo -e "mvn -B clean compile package -Prelease -Dmaven.test.skip=true"
+#mvn -B clean compile package -Prelease -Dmaven.test.skip=true
+#
+## mv dolphinscheduler-bin.tar.gz file to docker/build directory
+#echo -e "mv $(pwd)/dolphinscheduler-dist/target/apache-dolphinscheduler-${VERSION}-bin.tar.gz $(pwd)/docker/build/\n"
+#mv $(pwd)/dolphinscheduler-dist/target/apache-dolphinscheduler-${VERSION}-bin.tar.gz $(pwd)/docker/build/
 
 # docker build
 if [ "$1" = "x" ]
@@ -68,5 +67,4 @@ if (docker info 2> /dev/null | grep -i "ERROR"); then
 else
     $BUILD_COMMAND
 fi
-
 echo "------ dolphinscheduler end   - build -------"
